@@ -126,6 +126,12 @@ if test "$with_lib_kpp" = "yes"; then
   AC_DEFINE([WITH_LIB_KPP], 1, [KPP support enabled])
 fi
 
+AC_ARG_ENABLE([lib-ecc], [AS_HELP_STRING([--enable-lib-ecc], [Enable ECC  support in library])], [with_lib_ecc=$enableval])
+AM_CONDITIONAL([ENABLE_LIB_ECC], [test "x$with_lib_ecc" = "xyes"])
+if test "$with_lib_ecc" = "yes"; then
+  AC_DEFINE([WITH_LIB_ECC], 1, [ECC support enabled])
+fi
+
 AC_ARG_ENABLE([sum-prefix],
 	      AS_HELP_STRING([--enable-sum-prefix=PRE],[prefix to add to filenames when deriving the binary's checksum file's name (default ".")]),
 	      if test x$enableval != xno ; then
