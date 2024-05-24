@@ -248,4 +248,8 @@ LIBKCAPI_1.5.0 {
 	kcapi_md_sha3_256;
 	kcapi_md_sha3_384;
 	kcapi_md_sha3_512;
+	kcapi_ecc_init;
+	kcapi_ecc_destroy;
+	kcapi_ecc_verify;
+	kcapi_ecc_keygen;
 } LIBKCAPI_1.4.0;

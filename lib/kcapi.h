@@ -2494,6 +2494,74 @@ ssize_t kcapi_akcipher_stream_update(struct kcapi_handle *handle,
 				     struct iovec *iov, size_t iovlen);
 
 /**
+ * DOC: ECC Primitives
+ *
+ * API function calls used to invoke ECC operations.
+ */
+
+/**
+ * kcapi_ecc_init() - initialize cipher handle
+ *
+ * @handle: [out] cipher handle filled during the call
+ *
+ * This function provides the initialization of a ECC handle and
+ * establishes the connection to the kernel.
+ *
+ * On success, a pointer to kcapi_handle object is returned in *handle.
+ * Function kcapi_ecc_destroy should be called afterwards to free
+ * resources.
+ *
+ * @return 0 upon success;
+ *	   -ENOENT - algorithm not available;
+ *	   -EOPNOTSUPP - AF_ALG family not available;
+ *	   -EINVAL - accept syscall failed
+ *	   -ENOMEM - cipher handle cannot be allocated
+ */
+int kcapi_ecc_init(struct kcapi_handle **handle);
+
+/**
+ * kcapi_ecc_destroy() - close the cipher handle and release resources
+ *
+ * @handle: [in] cipher handle to release
+ */
+void kcapi_ecc_destroy(struct kcapi_handle *handle);
+
+/**
+ * kcapi_ecc_verify - verify curve point of public key
+ *
+ * @handle: [in] cipher handle
+ * @x: [in] public key curve point x
+ * @xlen: [in] length of x buffer
+ * @y: [in] public key curve point y
+ * @ylen: [in] length of y buffer
+ *
+ * @return number of bytes accepted by the key verification operation upon
+ *	   success; a negative errno-style error code if an error occurred
+ */
+int32_t kcapi_ecc_verify(struct kcapi_handle *handle,
+			 const uint8_t *x, uint32_t xlen,
+			 const uint8_t *y, uint32_t ylen);
+
+/**
+ * kcapi_ecc_keygen - generate a private/public key pair
+ *
+ * @handle: [in] cipher handle
+ * @privkey: [out] generated private key
+ * @privkeylen: [in] length of key buffer
+ * @x: [out] generated public key curve point x
+ * @xlen: [in] length of x buffer
+ * @y: [out] generated public key curve point y
+ * @ylen: [in] length of y buffer
+ *
+ * @return number of bytes returned by the key generation operation upon
+ *	   success; a negative errno-style error code if an error occurred
+ */
+int32_t kcapi_ecc_keygen(struct kcapi_handle *handle,
+			 uint8_t *privkey, uint32_t privkeylen,
+			 uint8_t *x, uint32_t xlen,
+			 uint8_t *y, uint32_t ylen);
+
+/**
  * kcapi_akcipher_stream_update_last() - send last data for processing (stream)
  *
  * @handle: [in] cipher handle
